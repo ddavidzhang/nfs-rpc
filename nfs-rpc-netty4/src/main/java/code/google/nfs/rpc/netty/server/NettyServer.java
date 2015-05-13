@@ -59,6 +59,8 @@ public class NettyServer implements Server {
 	}
 
 	public void start(int listenPort, final ExecutorService threadPool) throws Exception {
+		//简单的cas，当然这只是一个方法
+		//atomic 实现原理cas，compare会将获取的值跟旧值进行比较，相等则set成新值，否则自旋重复上述操作
 		if(!startFlag.compareAndSet(false, true)){
 			return;
 		}

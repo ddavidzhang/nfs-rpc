@@ -42,8 +42,8 @@ public abstract class AbstractBenchmarkServer {
 					"must give three args: listenPort | maxThreads | responseSize");
 		}
 		int listenPort = Integer.parseInt(args[0]);
-		int maxThreads = Integer.parseInt(args[1]);
 		final int responseSize = Integer.parseInt(args[2]);
+		int maxThreads = Integer.parseInt(args[1]);
 		System.out.println(dateFormat.format(new Date())
 				+ " ready to start server,listenPort is: " + listenPort
 				+ ",maxThreads is:" + maxThreads + ",responseSize is:"

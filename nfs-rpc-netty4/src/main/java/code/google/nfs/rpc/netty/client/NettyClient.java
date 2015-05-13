@@ -47,6 +47,7 @@ public class NettyClient extends AbstractClient {
 		final Client self = this;
 		ChannelFuture writeFuture = cf.channel().writeAndFlush(wrapper);
 		// use listener to avoid wait for write & thread context switch
+		//协议的发送是异步的，通过addlisten实现
 		writeFuture.addListener(new ChannelFutureListener() {
 			public void operationComplete(ChannelFuture future)
 					throws Exception {
@@ -78,6 +79,7 @@ public class NettyClient extends AbstractClient {
 				LOGGER.error(errorMsg);
 				ResponseWrapper response = new ResponseWrapper(wrapper.getId(), wrapper.getCodecType(), wrapper.getProtocolType());
 				response.setException(new Exception(errorMsg));
+				//收到的response统一放到 基类ConcurrentHashMap responses中，request和response通过wrapper id 配对
 				self.putResponse(response);
 			}
 		});

@@ -54,7 +54,9 @@ public abstract class AbstractClient implements Client {
 				methodName.getBytes(), argTypeBytes, args, timeout, codecType, protocolType);
 		return invokeSyncIntern(wrapper);
 	}
-
+	/*
+	由此方法看，netty虽然实现了nio，网络请求是异步的，但是为了获得对应的response，此方法仍是同步的
+	 */
 	private Object invokeSyncIntern(RequestWrapper wrapper) throws Exception {
 		long beginTime = System.currentTimeMillis();
 		ArrayBlockingQueue<Object> responseQueue = new ArrayBlockingQueue<Object>(1);
@@ -78,8 +80,10 @@ public abstract class AbstractClient implements Client {
 			LOGGER.error("send request to os sendbuffer error", e);
 			throw e;
 		}
+		//收到的response统一放在 ConcurrentHashMap responses中，request和response通过wrapper id 配对
 		Object result = null;
 		try {
+			//在method timeout 之内取结果
 			result = responseQueue.poll(
 					wrapper.getTimeout() - (System.currentTimeMillis() - beginTime),
 					TimeUnit.MILLISECONDS);

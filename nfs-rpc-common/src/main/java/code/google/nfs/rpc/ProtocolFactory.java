@@ -24,13 +24,15 @@ public class ProtocolFactory {
 	private static Protocol[] protocolHandlers = new Protocol[5];
 	
 	private static ServerHandler[] serverHandlers = new ServerHandler[5];
-	
+
+	//register nfs提供的两种rpc类型
 	static{
 		registerProtocol(RPCProtocol.TYPE, new RPCProtocol(), new RPCServerHandler());
 		registerProtocol(SimpleProcessorProtocol.TYPE, new SimpleProcessorProtocol(), new SimpleProcessorServerHandler());
 	}
-	
+
 	public static void registerProtocol(int type,Protocol customProtocol,ServerHandler customServerHandler){
+		//为自定义协议准备的方法
 		if(type > protocolHandlers.length){
 			Protocol[] newProtocolHandlers = new Protocol[type + 1];
 			System.arraycopy(protocolHandlers, 0, newProtocolHandlers, 0, protocolHandlers.length);

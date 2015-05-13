@@ -31,6 +31,7 @@ public class NettyRpcClient2 {
                 NettyRpcClient2.class.getClassLoader(),
                 new Class<?>[]{HelloWorldService.class},
                 new NettyClientInvocationHandler(servers, 1, 5, "helloworld", methodTimeouts, codectype, RPCProtocol.TYPE));
+
         String result=service.sayHello("real rpc");
         System.out.println(result);
     }

@@ -22,7 +22,7 @@ import code.google.nfs.rpc.ResponseWrapper;
 public class SimpleProcessorServerHandler implements ServerHandler{
 
 	private static final Log LOGGER = LogFactory.getLog(SimpleProcessorServerHandler.class);
-	
+	//instance name =>server processor
 	private Map<String, ServerProcessor> processors = new ConcurrentHashMap<String, ServerProcessor>();
 	
 	public void registerProcessor(String instanceName,Object instance){
